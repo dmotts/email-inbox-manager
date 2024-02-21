@@ -19,6 +19,7 @@ import json
 from langchain.schema import SystemMessage
 
 load_dotenv(find_dotenv())
+GOOGLE_SERPER_API_KEY = os.environ.get("GOOGLE_SERPER_API_KEY")
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-16k-0613")
 
@@ -257,7 +258,7 @@ def search(query):
     })
 
     headers = {
-        'X-API-KEY': 'xxxxxxxxxxxxxxxxxxxxx',
+        'X-API-KEY': GOOGLE_SERPER_API_KEY,
         'Content-Type': 'application/json'
     }
 
