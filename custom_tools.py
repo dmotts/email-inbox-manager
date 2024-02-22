@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv, find_dotenv
 import openai
 
-from langchain import PromptTemplate
+from langchain.prompts import PromptTemplate
 from langchain.agents import initialize_agent, Tool
 from langchain.agents import AgentType
 from langchain.chat_models import ChatOpenAI
@@ -127,7 +127,7 @@ class CategoriseEmailTool(BaseTool):
 # WRITE EMAIL
 def generate_email_response(email_thread: str, category: str):
     # URL endpoint
-    url = "https://api-f1db6c.stack.tryrelevance.com/latest/studios/6af484b0-a8bf-4545-91b8-75d46ac8f354/trigger_limited"
+    url = "https://api-bcbe5a.stack.tryrelevance.com/latest/studios/b4a2be23-4b1f-42e4-9428-5562cb997d6d/trigger_limited"
 
     # Headers
     headers = {
@@ -137,10 +137,10 @@ def generate_email_response(email_thread: str, category: str):
     # Payload (data)
     data = {
         "params": {
-            "client_email": email_thread,
+            "raw_email_thread": email_thread,
             "goal": "write email response" if category != "CONSULTING FOLLOW UP" else "for each consulting email, we need to collect 1. Their use case & problem they are trying to solve 2. Their budget; Try to collect those info from them",
         },
-        "project": "f86edbc1-fcb6-41f9-b9b6-be14a6f06412"
+        "project": "6e075595a8e4-43eb-960d-bcad68da523e"
     }
 
     # Send POST request

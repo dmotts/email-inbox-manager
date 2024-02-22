@@ -48,7 +48,12 @@ agent = initialize_agent(
 
 
 test_email = """
-xxxxxxx
+Subject: Account Verification Required Immediately!
+Body:
+Urgent: Your account has been temporarily suspended due to suspicious activity. Please click here to verify your account immediately. Failure to do so may result in permanent suspension.
+Thank you,
+[Your Bank]
+
 """
 
 agent({"input": test_email})
