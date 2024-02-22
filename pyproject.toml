@@ -14,6 +14,7 @@ langchain = "^0.1.8"
 openai = "^1.12.0"
 pydantic = "^2.6.1"
 python-dotenv = "^1.0.1"
+fastapi = "^0.109.2"
 
 
 [build-system]

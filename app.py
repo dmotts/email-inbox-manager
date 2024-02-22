@@ -8,6 +8,7 @@ from langchain.memory import ConversationSummaryBufferMemory
 from langchain.chains.summarize import load_summarize_chain
 from langchain.schema import SystemMessage
 from custom_tools import CreateEmailDraftTool, GenerateEmailResponseTool, ReplyEmailTool, EscalateTool, ProspectResearchTool, CategoriseEmailTool
+from fastapi import FastAPI
 
 load_dotenv()
 llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613")
@@ -46,16 +47,31 @@ agent = initialize_agent(
     memory=memory,
 )
 
+# Intialise FastAPI
+app = FastAPI()
+@app.get("/")
+#def researchAgent(query: Query):
+def emailInboxAgent():
 
-test_email = """
-Email 7: Important Contract Update
-Subject: Contract Amendment Required
+    test_email = """
+Email 1: Important Client Inquiry
+Subject: Urgent: Project Timeline Discussion Needed
 Body:
-Dear Jason,
-Following our recent discussions, we've identified a need to amend our current contract. Please review the attached document and let us know your availability for a meeting to discuss further.
+Dear [Client's Name],
+I hope this message finds you well. I'm reaching out to discuss our project timeline. Given the recent updates, it seems we might need to adjust our milestones. Could we schedule a call this week to go over the details?
 Best,
-Boston Legal Team
+[Your Name]
+
+Email 2: General Inquiry
+Subject: Inquiry About Your Services
+Body:
+Hello,
+I came across your company online and am interested in learning more about your services. Could you please provide more information or a brochure? Thank you!
+Kind regards,
+[Name]
 
 """
+    content = agent({"input": test_email})
+    actual_content = content['output']
+    return actual_content
 
-agent({"input": test_email})
