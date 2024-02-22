@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv, find_dotenv
-import openai
+from openai import OpenAI
 
 from langchain.prompts import PromptTemplate
 from langchain.agents import initialize_agent, Tool
@@ -20,15 +20,19 @@ from langchain.schema import SystemMessage
 
 load_dotenv(find_dotenv())
 GOOGLE_SERPER_API_KEY = os.environ.get("GOOGLE_SERPER_API_KEY")
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+
 llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-16k-0613")
 
+client = OpenAI(
+    # This is the default and can be omitted
+    api_key=os.environ.get("OPENAI_API_KEY"),
+)
 
 # CATEGORISE EMAIL
 def check_consulting_email(lates_reply: str):
     prompt = f"""
     EMAIL: {lates_reply}
-    ---
+    ---5
 
     Above is an email about Job offer / consulting; Your goal is identify if all information above is mentioned:
     1. What's the problem the prospect is trying to solve? 
@@ -39,14 +43,14 @@ def check_consulting_email(lates_reply: str):
     ANSWER: 
     """
 
-    all_needs_collected_result = openai.ChatCompletion.create(
+    all_needs_collected_result = client.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "user", "content": prompt}
         ]
     )
 
-    all_needs_collected = all_needs_collected_result["choices"][0]["message"]["content"]
+    all_needs_collected = all_needs_collected_result.choices[0].message.content
 
     return all_needs_collected
 
@@ -71,14 +75,14 @@ def categorise_email(lates_reply: str):
     CATEGORY (Return ONLY the category name in capital):
     """
 
-    category_result = openai.ChatCompletion.create(
+    category_result = client.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "user", "content": categorise_prompt}
         ]
     )
 
-    category = category_result["choices"][0]["message"]["content"]
+    category = category_result.choices[0].message.content
 
     if category == "JOB_OFFER/CONSULTING":
         all_needs_collected = check_consulting_email(lates_reply)

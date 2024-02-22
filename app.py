@@ -48,11 +48,13 @@ agent = initialize_agent(
 
 
 test_email = """
-Subject: Account Verification Required Immediately!
+Email 7: Important Contract Update
+Subject: Contract Amendment Required
 Body:
-Urgent: Your account has been temporarily suspended due to suspicious activity. Please click here to verify your account immediately. Failure to do so may result in permanent suspension.
-Thank you,
-[Your Bank]
+Dear Jason,
+Following our recent discussions, we've identified a need to amend our current contract. Please review the attached document and let us know your availability for a meeting to discuss further.
+Best,
+Boston Legal Team
 
 """
 
