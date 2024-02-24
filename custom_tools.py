@@ -44,7 +44,8 @@ def check_consulting_email(lates_reply: str):
     """
 
     all_needs_collected_result = client.chat.completions.create(
-        model="gpt-4",
+        #model="gpt-4",
+        model="gpt-3.5-turbo-16k-0613",
         messages=[
             {"role": "user", "content": prompt}
         ]
@@ -76,7 +77,8 @@ def categorise_email(lates_reply: str):
     """
 
     category_result = client.chat.completions.create(
-        model="gpt-4",
+        #model="gpt-4",
+        model="gpt-3.5-turbo-16k-0613",
         messages=[
             {"role": "user", "content": categorise_prompt}
         ]
