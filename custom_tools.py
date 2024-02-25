@@ -56,7 +56,21 @@ def check_consulting_email(lates_reply: str):
 
     return all_needs_collected
 
+def process_category(category):
+    switch = {
+        "": {
+            "Step 1": "Generate email response to the prospect to collect further info based on guidelines",
+            "Step 2": "Send generated email response to prospect"
+        },
+        "NON_REPLY": "This email has already been taken care of or replied before, nothing needs to be done now",
+        "default": {
+            "Step 1": "Generate email response based on guidelines",
+            "Step 2": "Create email draft with the generated response"
+        }
+    }
 
+    return switch.get(category, switch["default"])
+    
 def categorise_email(lates_reply: str):
     categorise_prompt = f"""
     EMAIL: {lates_reply}
@@ -64,15 +78,13 @@ def categorise_email(lates_reply: str):
 
     Your goal is to categorise the email based on categories below:
 
-    1. COLLABORATION/SPONSORSHIP: These are emails where companies or individuals are reaching out to propose a collaboration or sponsorship opportunity with AI Jason. They often include details about their product or service and how they envision the partnership.
+    1. COLLABORATION/SPONSORSHIP: These are emails where companies or individuals are reaching out to propose a collaboration or sponsorship opportunity with the company. They often include details about their product or service and how they envision the partnership
 
-    2. JOB_OFFER/CONSULTING: These emails involve individuals or companies reaching out to AI Jason with a specific job or project they want him to work on. This could range from developing an AI application to leading a specific activity.
+    2. INQUIRY: These are emails where companies or individuals are asking for information about a specific product or service our company offers.
 
-    3. QUESTIONS: These emails involve individuals reaching out to AI Jason with specific questions or inquiries. This could be about his videos, his knowledge on a specific topic, or his thoughts on a specific AI tool or technology.
+    2. NON_REPLY: These are auto emails that don't need any response or involve companies or individuals reaching out to offer their services. This could be a marketing agency offering to help him find sponsorship opportunities or a company offering a specific tool or service they think he might find useful.
 
-    4. NON_REPLY: These are auto emails that don't need any response or involve companies or individuals reaching out to AI Jason to offer their services. This could be a marketing agency offering to help him find sponsorship opportunities or a company offering a specific tool or service they think he might find useful.
-
-    5. OTHER: These are emails that don't fit into any of the above categories.
+3. OTHER: These are emails that don't fit into any of the above categories.
 
     CATEGORY (Return ONLY the category name in capital):
     """
@@ -87,32 +99,7 @@ def categorise_email(lates_reply: str):
 
     category = category_result.choices[0].message.content
 
-    if category == "JOB_OFFER/CONSULTING":
-        all_needs_collected = check_consulting_email(lates_reply)
-        if all_needs_collected == "YES":
-            return {
-                "Step 1": """Forward the email to jason.zhou.design@gmail.com, with summary of 1.What's the problem the prospect is trying to solve?  2.Their budget"""
-            }
-        else:
-            return {
-                "Step 1": "Generate email response to the prospect to collect further info based on guidelines",
-                "Step 2": "Send generated email response to prospect",
-            }
-    else:
-        if category == "COLLABORATION/SPONSORSHIP":
-            return {
-                "Step 1": "Research about the prospect & company",
-                "Step 2": "Forward the email to jason.zhou.design@gmail.com, with the research results included"
-            }
-        else:
-            if category == "NON_REPLY":
-                return f"This email has already been taken care of or replied before, nothing needs to be done now"
-            else:
-                return {
-                    "Step 1": "Generate email response based on guidelines",
-                    "Step 2": "Create email draft with the generated response"
-                }
-
+    return process_category(category)  
 
 class CategoriseEmailInput(BaseModel):
     lates_reply: str = Field(description="Latest reply from the prospect ")
@@ -165,7 +152,7 @@ class GenerateEmailResponseInput(BaseModel):
 
 class GenerateEmailResponseTool(BaseTool):
     name = "generate_email_response"
-    description = "use this to generate the email response based on specific guidelines, voice & tone & knowledge for AI Jason"
+    description = "use this to generate the email response based on specific guidelines, voice & tone & knowledge for the company"
     args_schema: Type[BaseModel] = GenerateEmailResponseInput
 
     def _run(self, email_thread: str, category: str):
