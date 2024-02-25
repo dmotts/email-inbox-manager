@@ -26,8 +26,8 @@ system_message = SystemMessage(
 
 tools = [
     CategoriseEmailTool(),
-    ProspectResearchTool(),
-    EscalateTool(),
+  #  ProspectResearchTool(),
+   # EscalateTool(),
     ReplyEmailTool(),
     CreateEmailDraftTool(),
     GenerateEmailResponseTool(),
