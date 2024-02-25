@@ -7,7 +7,9 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains.summarize import load_summarize_chain
 
 load_dotenv()
-llm = ChatOpenAI(temperature=0, model_name="gpt-4")
+#llm = ChatOpenAI(temperature=0, model_name="gpt-4")
+
+llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-16k-turbo-0613")
 
 def load_csv(file_path):
     # Create a list to hold dictionaries
@@ -39,8 +41,8 @@ def extract_faq(text_data):
     {text}
     ----
 
-    You are a smart AI assistant, above is some past emails from AI Jason (an AI youtuber), 
-    your goal is to learn & extract common FAQ about AI Jason 
+    You are a smart AI assistant, above is some past emails from the Social Media Marketing Agency company, 
+    your goal is to learn & extract common FAQ about the Social Media Marketing Agency company.
     (include both question & answer, return results in JSON):
     """
     map_prompt_template = PromptTemplate(template=map_prompt, input_variables=["text"])
