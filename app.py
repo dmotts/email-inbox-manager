@@ -61,7 +61,7 @@ app = FastAPI()
 @app.post("/")
 #def researchAgent(query: Query):
 def emailInboxAgent():
-
+    print("Email Received")
     test_email="""
     Email 1: Important Client Inquiry
     Subject: Urgent: Project Timeline Discussion Needed
