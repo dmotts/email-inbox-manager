@@ -74,5 +74,6 @@ def emailInboxAgent():
         """
     content = agent({"input": test_email})
     actual_content = content['output']
+    print(actual_content)
     return actual_content
 
