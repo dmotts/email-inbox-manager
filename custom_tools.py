@@ -20,13 +20,10 @@ import json
 from langchain.schema import SystemMessage
 
 load_dotenv(find_dotenv())
-GOOGLE_SERPER_API_KEY = os.environ.get("GOOGLE_SERPER_API_KEY")
 
 llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-16k-0613")
 
-client = OpenAI(
-    # This is the default and can be omitted
-    api_key=os.environ.get("OPENAI_API_KEY"),
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"),
 )
 
 # CATEGORISE EMAIL
@@ -84,7 +81,8 @@ def categorise_email(lates_reply: str):
 
     2. NON_REPLY: These are auto emails that don't need any response or involve companies or individuals reaching out to offer their services. This could be a marketing agency offering to help him find sponsorship opportunities or a company offering a specific tool or service they think he might find useful.
 
-3. OTHER: These are emails that don't fit into any of the above categories.
+3. OTHER: These are emails that))_
+\don't fit into any of the above categories.
 
     CATEGORY (Return ONLY the category name in capital):
     """
@@ -160,171 +158,6 @@ class GenerateEmailResponseTool(BaseTool):
 
     def _arun(self, url: str):
         raise NotImplementedError("failed to escalate")
-
-
-# RESEARCH AGENT
-
-def summary(objective, content):
-    text_splitter = RecursiveCharacterTextSplitter(
-        separators=["\n\n", "\n"], chunk_size=10000, chunk_overlap=500)
-    docs = text_splitter.create_documents([content])
-    map_prompt = """
-    Write a summary of the following text for {objective}:
-    "{text}"
-    SUMMARY:
-    """
-    map_prompt_template = PromptTemplate(
-        template=map_prompt, input_variables=["text", "objective"])
-
-    summary_chain = load_summarize_chain(
-        llm=llm,
-        chain_type='map_reduce',
-        map_prompt=map_prompt_template,
-        combine_prompt=map_prompt_template,
-        verbose=False
-    )
-
-    output = summary_chain.run(input_documents=docs, objective=objective)
-
-    return output
-
-
-def scrape_website(objective: str, url: str):
-    # scrape website, and also will summarize the content based on objective if the content is too large
-    # objective is the original objective & task that user give to the agent, url is the url of the website to be scraped
-
-    # Define the headers for the request
-    headers = {
-        'Cache-Control': 'no-cache',
-        'Content-Type': 'application/json',
-    }
-
-    # Define the data to be sent in the request
-    data = {
-        "url": url
-    }
-
-    # Convert Python object to JSON string
-    data_json = json.dumps(data)
-
-    # Send the POST request
-    response = requests.post(
-        "https://chrome.browserless.io/content?token=xxxxxxxxxxxxxxxxxxxxxxxxxxx", headers=headers, data=data_json)
-
-    # Check the response status code
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.content, "html.parser")
-        text = soup.get_text()
-        if len(text) > 10000:
-            output = summary(objective, text)
-            return output
-        else:
-            return text
-    else:
-        return f"HTTP request failed with status code {response.status_code}"
-
-
-class ScrapeWebsiteInput(BaseModel):
-    """Inputs for scrape_website"""
-    objective: str = Field(
-        description="The objective & task that users give to the agent")
-    url: str = Field(description="The url of the website to be scraped")
-
-
-class ScrapeWebsiteTool(BaseTool):
-    name = "scrape_website"
-    description = "useful when you need to get data from a website url, passing both url and objective to the function; DO NOT make up any url, the url should only be from the search results"
-    args_schema: Type[BaseModel] = ScrapeWebsiteInput
-
-    def _run(self, objective: str, url: str):
-        return scrape_website(objective, url)
-
-    def _arun(self, url: str):
-        raise NotImplementedError(
-            "get_stock_performance does not support async")
-
-
-def search(query):
-    url = "https://google.serper.dev/search"
-
-    payload = json.dumps({
-        "q": query
-    })
-
-    headers = {
-        'X-API-KEY': GOOGLE_SERPER_API_KEY,
-        'Content-Type': 'application/json'
-    }
-
-    response = requests.request("POST", url, headers=headers, data=payload)
-
-    return response.text
-
-
-def prospect_research(email_or_name: str, company: str):
-    tools = [
-        Tool(
-            name="Search",
-            func=search,
-            description="useful for when you need to answer questions about current events, data. You should ask targeted questions"
-        ),
-        ScrapeWebsiteTool(),
-    ]
-
-    system_message = SystemMessage(
-        content="""You are a world class researcher, who can do detailed research on any topic and produce facts based results; 
-                you do not make things up, you will try as hard as possible to gather facts & data to back up the research
-                
-                Please make sure you complete the objective above with the following rules:
-                1/ You should do enough research to gather as much information as possible about the objective
-                2/ If there are url of relevant links & articles, you will scrape it to gather more information
-                3/ After scraping & search, you should think "is there any new things i should search & scraping based on the data I collected to increase research quality?" If answer is yes, continue; But don't do this more than 3 iteratins
-                4/ You should not make things up, you should only write facts & data that you have gathered
-                5/ In the final output, You should include all reference data & links to back up your research; You should include all reference data & links to back up your research
-                6/ In the final output, You should include all reference data & links to back up your research; You should include all reference data & links to back up your research"""
-    )
-
-    agent_kwargs = {
-        "extra_prompt_messages": [MessagesPlaceholder(variable_name="memory")],
-        "system_message": system_message,
-    }
-    memory = ConversationSummaryBufferMemory(
-        memory_key="memory", return_messages=True, llm=llm, max_token_limit=1000)
-
-    agent = initialize_agent(
-        tools,
-        llm,
-        agent=AgentType.OPENAI_FUNCTIONS,
-        verbose=False,
-        agent_kwargs=agent_kwargs,
-        memory=memory,
-    )
-
-    message = f"Research about {company} and {email_or_name}; What does the company do, and who the person is"
-
-    result = agent({"input": message})
-
-    return result
-
-
-class ProspectResearchInput(BaseModel):
-    """Inputs for scrape_website"""
-    email_or_name: str = Field(
-        description="The original email address or name of prospect")
-    company: str = Field(description="The company name of prospect")
-
-
-class ProspectResearchTool(BaseTool):
-    name = "prospect_research"
-    description = "useful when you need to research about a prospect, passing both email and company to the function, return the summary of its company as well as the prospect"
-    args_schema: Type[BaseModel] = ProspectResearchInput
-
-    def _run(self, email_or_name: str, company: str):
-        return prospect_research(email_or_name, company)
-
-    def _arun(self, url: str):
-        raise NotImplementedError("failed to escalate")
-
 
 # ESCALATE
 
