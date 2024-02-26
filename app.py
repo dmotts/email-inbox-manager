@@ -7,7 +7,7 @@ from langchain.prompts import MessagesPlaceholder
 from langchain.memory import ConversationSummaryBufferMemory
 from langchain.chains.summarize import load_summarize_chain
 from langchain.schema import SystemMessage
-from custom_tools import CreateEmailDraftTool, GenerateEmailResponseTool, ReplyEmailTool, EscalateTool, ProspectResearchTool, CategoriseEmailTool
+from custom_tools import CreateEmailDraftTool, GenerateEmailResponseTool, ReplyEmailTool, EscalateTool, CategoriseEmailTool
 from fastapi import FastAPI
 from langchain.callbacks import StreamlitCallbackHandler
 import streamlit as st
@@ -26,7 +26,6 @@ system_message = SystemMessage(
 
 tools = [
     CategoriseEmailTool(),
-  #  ProspectResearchTool(),
    # EscalateTool(),
     ReplyEmailTool(),
     CreateEmailDraftTool(),
