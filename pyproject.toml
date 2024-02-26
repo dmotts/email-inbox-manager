@@ -19,7 +19,7 @@ langchain-openai = "^0.0.7"
 langchain-community = "^0.0.24"
 langchain-core = "^0.1.26"
 streamlit = "^1.31.1"
-uvicorn = "^0.15.0"
+uvicorn = "^4.9.0"
 
 
 [build-system]
