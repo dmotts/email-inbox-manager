@@ -58,7 +58,8 @@ if prompt := st.chat_input():
 
 # Intialise FastAPI
 app = FastAPI()
-@app.post("/")
+
+@app.get("/")
 #def researchAgent(query: Query):
 def emailInboxAgent():
     print("Email Received")
