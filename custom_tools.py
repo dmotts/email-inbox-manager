@@ -41,8 +41,8 @@ def check_consulting_email(lates_reply: str):
     """
 
     all_needs_collected_result = client.chat.completions.create(
-        #model="gpt-4",
-        model="gpt-3.5-turbo-16k-0613",
+        model="gpt-4",
+        #model="gpt-3.5-turbo-16k-0613",
         messages=[
             {"role": "user", "content": prompt}
         ]
@@ -54,10 +54,6 @@ def check_consulting_email(lates_reply: str):
 
 def process_category(category):
     switch = {
-        "": {
-            "Step 1": "Generate email response to the prospect to collect further info based on guidelines",
-            "Step 2": "Send generated email response to prospect"
-        },
         "NON_REPLY": "This email has already been taken care of or replied before, nothing needs to be done now",
         "default": {
             "Step 1": "Generate email response based on guidelines",
@@ -78,10 +74,9 @@ def categorise_email(lates_reply: str):
 
     2. INQUIRY: These are emails where companies or individuals are asking for information about a specific product or service our company offers.
 
-    2. NON_REPLY: These are auto emails that don't need any response or involve companies or individuals reaching out to offer their services. This could be a marketing agency offering to help him find sponsorship opportunities or a company offering a specific tool or service they think he might find useful.
+    3. NON_REPLY: These are auto emails that don't need any response or involve companies or individuals reaching out to offer their services. This could be a marketing agency offering to help him find sponsorship opportunities or a company offering a specific tool or service they think he might find useful.
 
-3. OTHER: These are emails that))_
-\don't fit into any of the above categories.
+4. OTHER: These are emails that don't fit into any of the above categories.
 
     CATEGORY (Return ONLY the category name in capital):
     """
