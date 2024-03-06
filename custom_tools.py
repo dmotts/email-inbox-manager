@@ -1,4 +1,4 @@
-
+    
 import os
 from dotenv import load_dotenv, find_dotenv
 from openai import OpenAI
@@ -18,7 +18,6 @@ from bs4 import BeautifulSoup
 import requests
 import json
 from langchain.schema import SystemMessage
-from gmail-draft-creator import create_draft
 
 load_dotenv(find_dotenv())
 
