@@ -58,21 +58,16 @@ if prompt := st.chat_input():
 
 # Intialise FastAPI
 app = FastAPI()
-
 @app.post("/")
-#def researchAgent(query: Query):
-def emailInboxAgent():
+def emailInboxAgent(name: str, email: str, subject: str, body: str):
     print("Email Received")
-    test_email="""
-    Email 1: Important Client Inquiry
-    Subject: Urgent: Project Timeline Discussion Needed
-    Body:
-    Dear [Client's Name],
-    I hope this message finds you well. I'm reaching out to discuss our project timeline. Given the recent updates, it seems we might need to adjust our milestones. Could we schedule a call this week to go over the details?
-    Best,
-    [Your Name]
 
-        """
+    test_email = f"""
+        From:  {email}
+        Subject: {subject}
+        Body:
+        {body}
+    """
     content = agent({"input": test_email})
     actual_content = content['output']
     print(actual_content)
