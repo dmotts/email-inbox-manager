@@ -60,8 +60,9 @@ if prompt := st.chat_input():
 app = FastAPI()
 @app.post("/")
 def emailInboxAgent(name: str = Form(...), email: str = Form(...), subject: str = Form(...), content: str = Form(...)):
-    print("Email Received")
-
+    
+    print(f"Email Received from {name}")
+    
     test_email = f"""
         From:  {email}
         Subject: {subject}
