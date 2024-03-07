@@ -8,7 +8,7 @@ from langchain.memory import ConversationSummaryBufferMemory
 from langchain.chains.summarize import load_summarize_chain
 from langchain.schema import SystemMessage
 from custom_tools import CreateEmailDraftTool, GenerateEmailResponseTool, ReplyEmailTool, EscalateTool, CategoriseEmailTool
-from fastapi import FastAPI
+from fastapi import FastAPI, Form
 from langchain.callbacks import StreamlitCallbackHandler
 import streamlit as st
 
