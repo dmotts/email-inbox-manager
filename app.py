@@ -59,7 +59,7 @@ if prompt := st.chat_input():
 # Intialise FastAPI
 app = FastAPI()
 @app.post("/")
-def emailInboxAgent(name: str, email: str, subject: str, body: str):
+def emailInboxAgent(name: str = Form(...), email: str = Form(...), subject: str = Form(...), content: str = Form(...)):
     print("Email Received")
 
     test_email = f"""
