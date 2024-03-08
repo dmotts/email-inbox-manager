@@ -69,14 +69,14 @@ def categorise_email(lates_reply: str):
     ---
 
     Your goal is to categorise the email based on categories below:
-
-    1. COLLABORATION/SPONSORSHIP: These are emails where companies or individuals are reaching out to propose a collaboration or sponsorship opportunity with the company. They often include details about their product or service and how they envision the partnership
-
-    2. INQUIRY: These are emails where companies or individuals are asking for information about a specific product or service our company offers.
-
-    3. NON_REPLY: These are auto emails that don't need any response or involve companies or individuals reaching out to offer their services. This could be a marketing agency offering to help him find sponsorship opportunities or a company offering a specific tool or service they think he might find useful.
-
-4. OTHER: These are emails that don't fit into any of the above categories.
+  1. Urgent: Emails that require immediate attention or response.
+   2. Action Required: Emails that require specific actions or follow-ups.
+   3. Informational: Emails that provide general information or updates.
+   4. Personal: Emails from friends, family, or personal contacts.
+   5. Promotions: Emails related to marketing, offers, or promotions.
+   6. Newsletters: Emails containing newsletters or subscriptions.
+   7. Non-Reply: Auto-generated emails or offers from companies or individuals that don't require a response.
+   8. Other: Emails that don't fit into any of the above categories.
 
     CATEGORY (Return ONLY the category name in capital):
     """
