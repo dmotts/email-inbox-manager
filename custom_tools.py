@@ -29,7 +29,7 @@ client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"),
 def check_consulting_email(lates_reply: str):
     prompt = f"""
     EMAIL: {lates_reply}
-    ---5
+    ---
 
     Above is an email about Job offer / consulting; Your goal is identify if all information above is mentioned:
     1. What's the problem the prospect is trying to solve? 
@@ -76,7 +76,7 @@ def categorise_email(lates_reply: str):
    5. Promotions: Emails related to marketing, offers, or promotions.
    6. Newsletters: Emails containing newsletters or subscriptions.
    7. Non-Reply: Auto-generated emails or offers from companies or individuals that don't require a response.
-   8. Other: Emails that don't fit into any of the above categories.
+   8. Other: Emails that don't fit into any of the above categories. These emails do not require a response.
 
     CATEGORY (Return ONLY the category name in capital):
     """
