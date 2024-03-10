@@ -116,6 +116,9 @@ class CategoriseEmailTool(BaseTool):
 
 # WRITE EMAIL
 def generate_email_response(email_thread: str, category: str):
+
+    print('Executing generate_email_response function...')
+    
     # URL endpoint
     url = "https://api-bcbe5a.stack.tryrelevance.com/latest/studios/b4a2be23-4b1f-42e4-9428-5562cb997d6d/trigger_limited"
 
@@ -159,6 +162,9 @@ class GenerateEmailResponseTool(BaseTool):
 # ESCALATE
 
 def escalate(original_email_address: str, message: str, additional_context: str):
+
+    print('Executing escalate function...')
+    
     # URL to send the POST request to
     url = 'https://hooks.zapier.com/hooks/catch/15616669/38qwq19/'
 
@@ -203,6 +209,9 @@ class EscalateTool(BaseTool):
 
 # REPLY EMAIL
 def reply_email(message: str, email_address: str, subject: str):
+
+    print('Executing reply_email function...')
+    
     return f"An email has been sent to {email_address}"
 
     # URL to send the POST request to
@@ -248,6 +257,9 @@ class ReplyEmailTool(BaseTool):
 
 # CREATE EMAIL DRAFT
 def create_email_draft(prospect_email_address: str, subject: str, generated_reply: str):
+
+    print('Executing create_email_draft function...')
+    
     # URL to send the POST request to
     url = 'https://hook.us1.make.com/rr5iyp2c56sg59rpsljvhetyndtsfdnn'
 
