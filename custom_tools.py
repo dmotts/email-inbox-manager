@@ -54,6 +54,11 @@ def check_consulting_email(lates_reply: str):
 
 def process_category(category):
     switch = {
+        "URGENT":"This email requires a response",
+        "ACTION_REQUIRED": "This email requires a response"
+        ,
+        "INFORMATIONAL": "This email does not require a response. Mark as unread",
+        "NEWSLETTER": "This email does not require a response",
         "NON_REPLY": "This email has already been taken care of or replied before, nothing needs to be done now",
         "default": {
             "Step 1": "Generate email response based on guidelines",
@@ -69,14 +74,13 @@ def categorise_email(lates_reply: str):
     ---
 
     Your goal is to categorise the email based on categories below:
-  1. Urgent: Emails that require immediate attention or response.
-   2. Action Required: Emails that require specific actions or follow-ups.
-   3. Informational: Emails that provide general information or updates.
-   4. Personal: Emails from friends, family, or personal contacts.
-   5. Promotions: Emails related to marketing, offers, or promotions.
-   6. Newsletters: Emails containing newsletters or subscriptions.
-   7. Non-Reply: Auto-generated emails or offers from companies or individuals that don't require a response.
-   8. Other: Emails that don't fit into any of the above categories. These emails do not require a response.
+  1. URGENT: Emails that require immediate attention or response.
+   2. ACTION REQUIRED: Emails that require specific actions or follow-ups.
+   3. INFORMATIONAL: Emails that provide general information or updates.
+   4. PERSONAL: Emails from friends, family, or personal contacts.
+   5. NEWSLETTER: Emails containing newsletters or subscriptions.
+   6. NON-REPLY: Auto-generated emails or offers from companies or individuals that don't require a response.
+   7. OTHER: Emails that don't fit into any of the above categories. 
 
     CATEGORY (Return ONLY the category name in capital):
     """
