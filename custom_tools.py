@@ -127,7 +127,7 @@ def generate_email_response(email_thread: str, category: str):
     data = {
         "params": {
             "raw_email_thread": email_thread,
-            "goal": "write email response",
+            "goal": "write email response but only respond with 'Okay'",
         },
         "project": "6e075595a8e4-43eb-960d-bcad68da523e"
     }
