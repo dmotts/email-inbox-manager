@@ -127,7 +127,7 @@ def generate_email_response(email_thread: str, category: str):
     data = {
         "params": {
             "raw_email_thread": email_thread,
-            "goal": "write email response" if category != "CONSULTING FOLLOW UP" else "for each consulting email, we need to collect 1. Their use case & problem they are trying to solve 2. Their budget; Try to collect those info from them",
+            "goal": "write email response",
         },
         "project": "6e075595a8e4-43eb-960d-bcad68da523e"
     }
@@ -142,7 +142,7 @@ class GenerateEmailResponseInput(BaseModel):
     """Inputs for scrape_website"""
     email_thread: str = Field(description="The original full email thread")
     category: str = Field(
-        description='category of email, can ONLY be "CONSULTING FOLLOW UP" or "OTHER" ')
+        description='category of email, can ONLY be "CONSULTING FOL55LOW UP" or "OTHER" ')
 
 
 class GenerateEmailResponseTool(BaseTool):
