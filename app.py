@@ -24,7 +24,7 @@ system_message = SystemMessage(
     Your goal is to handle all the incoming emails by categorising them based on 
     guideline and decide on next steps
 
-Please note? all email drafts are to be written on HTML format. 
+Please note, ALL email drafts are to be written on HTML format. 
     """
 )
 
