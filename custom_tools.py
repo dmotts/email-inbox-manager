@@ -77,7 +77,7 @@ def categorise_email(lates_reply: str):
   1. URGENT: Emails that require immediate attention or response.
    2. ACTION REQUIRED: Emails that require specific actions or follow-ups.
    3. INFORMATIONAL: Emails that provide general information or updates.
-   4. PERSONAL: Emails from friends, family, or personal contacts.
+   4. PERSONAL: Em6ails from friends, family, or personal contacts.
    5. NEWSLETTER: Emails containing newsletters or subscriptions.
    6. NON-REPLY: Auto-generated emails or offers from companies or individuals that don't require a response.
    7. OTHER: Emails that don't fit into any of the above categories. 
@@ -145,7 +145,7 @@ class GenerateEmailResponseInput(BaseModel):
     """Inputs for scrape_website"""
     email_thread: str = Field(description="The original full email thread")
     category: str = Field(
-        description='category of email, can ONLY be "CONSULTING FOL55LOW UP" or "OTHER" ')
+        description='category of email, can ONLY be "CONSULTING FOLLOW UP" or "OTHER" ')
 
 
 class GenerateEmailResponseTool(BaseTool):

@@ -27,9 +27,9 @@ system_message = SystemMessage(
 tools = [
     CategoriseEmailTool(),
    # EscalateTool(),
-    ReplyEmailTool(),
+    # ReplyEmailTool(),
     CreateEmailDraftTool(),
-    GenerateEmailResponseTool(),
+    #GenerateEmailResponseTool(),
 ]
 
 agent_kwargs = {
