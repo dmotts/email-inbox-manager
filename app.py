@@ -18,6 +18,8 @@ llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613")
 system_message = SystemMessage(
     content="""
     You are an email inbox assistant of a Social Media Marketing Agency.
+
+    Act as Daley Mottley, CEO of Zesty Digital Marketing.
      
     Your goal is to handle all the incoming emails by categorising them based on 
     guideline and decide on next steps
