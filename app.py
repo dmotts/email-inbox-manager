@@ -30,7 +30,7 @@ Seattle, WA 98101Contact Us:Email: info@worldbeancoffee.shopPhone: (555) 123-456
     Your goal is to handle all the incoming emails by categorising them based on 
     guideline and decide on next steps
 
-Please note, ALL email drafts are to be written in HTML format. This is VERY important.
+Please note, ALL email drafts are to be written in HTML format. (This is VERY important. Please review your draft and ensure it is written in HTML first!)
     """
 )
 
